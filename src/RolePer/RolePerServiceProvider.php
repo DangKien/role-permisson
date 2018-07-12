@@ -37,7 +37,7 @@ class RolePerServiceProvider extends ServiceProvider
         ]);
         $this->bladeDirectives();
 
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        // $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**
