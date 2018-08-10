@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Permission;
 use App\Models\Role;
+use DB;
 
 class RoleController extends Controller
 {

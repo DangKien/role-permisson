@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\PermissionGroup;
 use App\Models\Permission;
+use DB;
 
 class PermissionGroupController extends Controller
 {
