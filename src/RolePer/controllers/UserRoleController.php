@@ -42,15 +42,20 @@ class UserRoleController extends Controller
      */
     public function store(Request $request, $id)
     {
-		$user = User::find($id);
-        if (isset($request->roles))
-        {
-			$user->roles()->sync($request->roles);
+        DB::beginTransaction();
+        try {
+            $user = User::find($id);
+            if (isset($request->roles)) {
+                $user->roles()->sync($request->roles);
+            }
+            else {
+                $user->roles()->sync([]);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
         }
-        else
-        {
-            $user->roles()->sync([]);
-        }
+		
 		return redirect()->route('users.index');
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Permission;
+use DB;
 
 class PermissionController extends Controller
 {	
@@ -45,12 +46,17 @@ class PermissionController extends Controller
     			'name'         => 'required|unique:permissions',
     			'display_name' => 'required|unique:permissions',
     	    ));
-            $this->permissionModel->name                = $request->name;
-            $this->permissionModel->display_name        = $request->display_name;
-            $this->permissionModel->description         = $request->description;
-            $this->permissionModel->permission_group_id = $request->per_gr;
-            $this->permissionModel->save();
-    		
+            DB::beginTransaction();
+            try {
+                $this->permissionModel->name                = $request->name;
+                $this->permissionModel->display_name        = $request->display_name;
+                $this->permissionModel->description         = $request->description;
+                $this->permissionModel->permission_group_id = $request->per_gr;
+                $this->permissionModel->save();
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+            }
     		return redirect()->route('permissions.index');
     }
 
@@ -87,13 +93,18 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $permission = $this->permissionModel->findOrFail($id);
-        $permission->name                = $request->name;
-        $permission->display_name        = $request->display_name;
-        $permission->description         = $request->description;
-        $permission->permission_group_id = $request->per_gr;
-		$permission->save();
-		
+        DB::beginTransaction();
+        try {
+            $permission = $this->permissionModel->findOrFail($id);
+            $permission->name                = $request->name;
+            $permission->display_name        = $request->display_name;
+            $permission->description         = $request->description;
+            $permission->permission_group_id = $request->per_gr;
+            $permission->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
 		return redirect()->route('permissions.index');
     }
 
@@ -105,9 +116,17 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-    	if ($permission = $this->permissionModel::whereId($id)) {
-    	    $permission->delete();
-    	}
+        DB::beginTransaction();
+        try {
+            if ($permission = $this->permissionModel::whereId($id)) {
+                $permission->delete();
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        
+    	
 		return redirect()->route('permissions.index');
     }
 }

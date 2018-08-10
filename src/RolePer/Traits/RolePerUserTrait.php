@@ -118,10 +118,6 @@ trait RolePerUserTrait
                     return false;
                 }
             }
-
-            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
-            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
-            // Return the value of $requireAll;
             return $requireAll;
         } else {
             foreach ($this->cachedRoles() as $role) {

@@ -6,13 +6,17 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\PermissionGroup;
+use App\Models\Permission;
 
 class PermissionGroupController extends Controller
 {
     private $permissionGroupModel;
-    public function __construct(PermissionGroup $permissionGroupModel)
+    private $permissionModel;
+
+    public function __construct(PermissionGroup $permissionGroupModel, Permission $permissionModel)
     {
         $this->permissionGroupModel = $permissionGroupModel;
+        $this->permissionModel      = $permissionModel;
     }
     /**
      * Display a listing of the resource.
@@ -46,10 +50,15 @@ class PermissionGroupController extends Controller
             'name'         => 'required|unique:permission_group',
             'display_name' => 'required|unique:permission_group',
         ));
-        $this->permissionGroupModel->name         = $request->name;
-        $this->permissionGroupModel->display_name = $request->display_name;
-        $this->permissionGroupModel->save();
-
+        DB::beginTransaction();
+        try {
+            $this->permissionGroupModel->name         = $request->name;
+            $this->permissionGroupModel->display_name = $request->display_name;
+            $this->permissionGroupModel->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
         return redirect()->route('permissions-group.index');
     }
 
@@ -85,10 +94,17 @@ class PermissionGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $permissionGr = $this->permissionGroupModel->findOrFail($id);
-        $permissionGr->name         = $request->name;
-        $permissionGr->display_name = $request->display_name;
-        $permissionGr->save();
+        DB::beginTransaction();
+        try {
+            $permissionGr               = $this->permissionGroupModel->findOrFail($id);
+            $permissionGr->name         = $request->name;
+            $permissionGr->display_name = $request->display_name;
+            $permissionGr->save();
+            
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
         return redirect()->route('permissions-group.index');
     }
 
@@ -100,6 +116,17 @@ class PermissionGroupController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            if ( $permissionGr = $this->permissionGroupModel::whereId($id) ) {
+                $this->permissionModel->where('permission_group_id', $permissionGr->id)->delete();
+                $permissionGr->delete();
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        
+        return redirect()->route('roles.index');
     }
 }

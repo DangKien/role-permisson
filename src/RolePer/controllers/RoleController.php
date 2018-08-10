@@ -40,11 +40,18 @@ class RoleController extends Controller
 			'name'         => 'required|unique:roles',
 			'display_name' => 'required|unique:roles',
 	    ));
-		$role               = new Role;
-		$this->roleModel->name         = $request->name;
-		$this->roleModel->display_name = $request->display_name;
-		$this->roleModel->description  = $request->description;
-		$this->roleModel->save();
+        $role                          = new Role();
+        DB::beginTransaction();
+        try {
+            $this->roleModel->name         = $request->name;
+            $this->roleModel->display_name = $request->display_name;
+            $this->roleModel->description  = $request->description;
+            $this->roleModel->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        
 		
 		return redirect()->route('roles.index');
     }
@@ -82,11 +89,18 @@ class RoleController extends Controller
                 'name'         => 'required',
                 'display_name' => 'required',
             ));
-            $role = $this->roleModel->findOrFail($id);
-            $role->name         = $request->name;
-            $role->display_name = $request->display_name;
-            $role->description  = $request->description;
-    		$role->save();
+            DB::beginTransaction();
+            try {
+                $role = $this->roleModel->findOrFail($id);
+                $role->name         = $request->name;
+                $role->display_name = $request->display_name;
+                $role->description  = $request->description;
+                $role->save();
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+            }
+           
     		
     		return redirect()->route('roles.index');
         }
@@ -98,9 +112,16 @@ class RoleController extends Controller
          */
         public function destroy($id)
         {
-        	if ($role = $this->roleModel::whereId($id)) {
-        	    $role->delete();
-        	}
+            DB::beginTransaction();
+            try {
+                if ($role = $this->roleModel::whereId($id) && $role->name != 'supperadmin') {
+                    $role->delete();
+                }
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+            }
+        	
     		return redirect()->route('roles.index');
         }
 }

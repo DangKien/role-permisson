@@ -43,17 +43,22 @@ class RolePermissionController extends Controller
      */
     public function store(Request $request, $role_id)
     {
-    	$role = Role::findOrFail($role_id);
-		if (isset($request->permission) && count($request->permission))
-		{
-			$role->permission_role()->sync($request->permission);
-		}
-		else
-		{
-			$role->permission_role()->sync(array());
-		}
-		$role->save();
-		
+        DB::beginTransaction();
+        try {
+            $role = Role::findOrFail($role_id);
+            if (isset($request->permission) && count($request->permission)) {
+                $role->permission_role()->sync($request->permission);
+            }
+            else {
+                $role->permission_role()->sync(array());
+            }
+
+            $role->save();    
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+    	
 		return redirect()->route('roles.index');
     }
 
