@@ -7,7 +7,7 @@ Role-Permission Laravel Packget
 1)Just add the following to your composer.json. Then run `composer update`:
 
 ```json
-"dangkien/roleper": "dev-master"
+"dangkien/roleper": "dev-master" --no-scripts
 ```
 
 2) Open your `config/app.php` and add the following to the `providers` array:
