@@ -23,7 +23,7 @@ class UserRoleController extends Controller
      */
     public function index($id)
     {	
-    	$user = $this->userModel::findOrFail($id)->with("roles")->first();
+    	$user = $this->userModel->with("roles")->findOrFail($id);
     	return view("user_permission.user_role.index", array('user'=>$user));
     }
     /**
@@ -46,6 +46,7 @@ class UserRoleController extends Controller
         DB::beginTransaction();
         try {
             $user = User::find($id);
+            return $user;
             if (isset($request->roles)) {
                 $user->roles()->sync($request->roles);
             }

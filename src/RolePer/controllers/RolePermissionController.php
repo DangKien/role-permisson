@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Role;
-use DB;
+use DB, Auth;
 
 class RolePermissionController extends Controller
 {
@@ -24,6 +24,10 @@ class RolePermissionController extends Controller
     public function index($role_id)
     {
     	$role = $this->roleModel::with('permission_role')->findOrFail($role_id);
+        
+        if ($role->name = config('roleper.superadmin') && !Auth::user()->hasRole(['superadmin'])) {
+            return redirect()->back();
+        }
 
         return view("user_permission.role.permission.index", array("role" => $role));
     }

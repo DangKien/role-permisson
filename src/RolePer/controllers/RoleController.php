@@ -11,11 +11,11 @@ use DB;
 
 class RoleController extends Controller
 {
-    private $roleModel;
+	private $roleModel;
 
     public function __construct(Role $roleModel)
     {
-        $this->roleModel      = $roleModel;
+    	$this->roleModel      = $roleModel;
     }
 
     public function index() {
@@ -37,11 +37,11 @@ class RoleController extends Controller
          * @return \Illuminate\Http\Response
          */
     public function store(Request $request) {
-        $this->validate($request, array(
-            'name'         => 'required|unique:roles',
-            'display_name' => 'required|unique:roles',
-        ));
-        $role                          = new Role();
+    	$this->validate($request, array(
+			'name'         => 'required|unique:roles',
+			'display_name' => 'required|unique:roles',
+	    ));
+        $role = new Role();
         DB::beginTransaction();
         try {
             $this->roleModel->name         = $request->name;
@@ -53,8 +53,8 @@ class RoleController extends Controller
             DB::rollback();
         }
         
-        
-        return redirect()->route('roles.index');
+		
+		return redirect()->route('roles.index');
     }
         /**
          * Display the specified resource.
@@ -73,8 +73,8 @@ class RoleController extends Controller
          * @return \Illuminate\Http\Response
          */
         public function edit($id)
-        {   
-            $role = Role::findOrFail($id);
+        {	
+        	$role = Role::findOrFail($id);
             return view("user_permission.role.add", array("role" => $role));
         }
         /**
@@ -102,8 +102,8 @@ class RoleController extends Controller
                 DB::rollback();
             }
            
-            
-            return redirect()->route('roles.index');
+    		
+    		return redirect()->route('roles.index');
         }
         /**
          * Remove the specified resource from storage.
@@ -116,14 +116,14 @@ class RoleController extends Controller
             DB::beginTransaction();
             try {
                 $role = $this->roleModel::where('id',$id)->first();
-                if (!empty($role) && @$role->name != 'superadmin') {
+                if (!empty($role) && @$role->name != config('roleper.superadmin')) {
                     $role->delete();
                 }
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollback();
             }
-            
-            return redirect()->route('roles.index');
+        	
+    		return redirect()->route('roles.index');
         }
 }
