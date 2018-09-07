@@ -30,14 +30,12 @@ class RolePerServiceProvider extends ServiceProvider
         // Publish config files
         $this->publishes([
             __DIR__.'/../config/config.php' => app()->basePath() . '/config/roleper.php',
-            __DIR__.'/migrations' => base_path('database/migrations'),
-            __DIR__.'/Models' => base_path('app/Models'),
-            __DIR__.'/Middleware' => base_path('app/Http/Middleware'),
-            __DIR__.'/../views/role_per' => base_path('resources/views/user_permission'),
+            __DIR__.'/migrations'           => base_path('database/migrations'),
+            __DIR__.'/Models'               => base_path('app/Models'),
+            __DIR__.'/Middleware'           => base_path('app/Http/Middleware'),
+            __DIR__.'/../views/role_per'    => base_path('resources/views/user_permission'),
         ]);
         $this->bladeDirectives();
-
-        // $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**
