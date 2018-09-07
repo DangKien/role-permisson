@@ -4,7 +4,7 @@
 	<div id="content-container">
 		<div id="page-head">
             <div id="page-title">
-                <h1 class="page-header text-overflow">Permission</h1>
+                <h1 class="page-header text-overflow">{{ trans('backend.permission.lable') }}</h1>
             </div>
             <ol class="breadcrumb">
 				<li><a href="#"><i class="demo-pli-home"></i></a></li>
@@ -21,7 +21,7 @@
 		            	<div class="pad-btm form-inline">
 				            <div class="row">
 				                <div class="col-sm-6 table-toolbar-left">
-				                   <a href="{{ route('permissions.create') }}" id="demo-btn-addrow" class="btn btn-purple"><i class="demo-pli-add"></i> Add Permission</a>
+				                   <a href="{{ route('permissions.create') }}" id="demo-btn-addrow" class="btn btn-purple"><i class="demo-pli-add"></i> {{ trans('backend.permission.add') }}</a>
 				                </div>
 				                <div class="col-sm-6 table-toolbar-right">
 				                    <div class="form-group col-sm-12">
@@ -39,11 +39,11 @@
 		                        <thead>
 		                            <tr>
 		                                <th class="text-center">#</th>
-		                                <th>Mã Role</th>
-		                                <th>Tên hiện thị</th>
-		                                <th>Nhóm quyền </th>
-		                                <th>Mô tả về quyền</th>
-		                                <th>Thao tác</th>
+		                                <th>{{ trans('backend.permission.permission') }}</th>
+		                                <th>{{ trans('backend.permission.display_name') }}</th>
+		                                <th>{{ trans('backend.permission.permission_group') }} </th>
+		                                <th>{{ trans('backend.permission.description') }}</th>
+		                                <th>{{ trans('backend.actions.action') }}</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>

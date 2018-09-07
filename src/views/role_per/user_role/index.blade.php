@@ -4,11 +4,11 @@
 	<div id="content-container">
 		<div id="page-head">
             <div id="page-title">
-                <h1 class="page-header text-overflow">Người dùng</h1>
+                <h1 class="page-header text-overflow">{{ trans('backend.user_role.lable') }}</h1>
             </div>
             <ol class="breadcrumb">
 				<li><a href="#"><i class="demo-pli-home"></i></a></li>
-				<li><a href="#">Role</a></li>
+				<li><a href="#">{{ trans('backend.actions.list') }}</a></li>
             </ol>
         </div>
 		<div id="page-content">
@@ -26,7 +26,7 @@
 			            	<form action="{{ route('user-permission.store', $user->id) }}" method="POST" accept-charset="utf-8" enctype="multipart/form-data">
 			            		@csrf
 			            		@method ('POST')
-    			            	<p class="text-main text-bold mar-no">Quyền cho users</p>
+    			            	<p class="text-main text-bold mar-no">{{ trans('backend.user_role.premission') }}</p>
     			            	<select multiple="multiple" class="form-control selected-2" name="roles[]">
     		            	        @foreach ($roles as $key => $role) 	
     									<option @foreach ($user->roles as $user_role) 
@@ -45,7 +45,7 @@
     			            	<br>
     			            	<div class="row">
     			            		<div class="col-sm-12">
-    			            			<button type="submit" class="btn btn-primary btn-block">Gửi</button>
+    			            			<button type="submit" class="btn btn-primary btn-block">{{ trans('backend.actions.submit') }}</button>
     			            		</div>
     			            	</div>
 			            	</form>

@@ -44,7 +44,7 @@ class PermissionController extends Controller
     public function store(Request $request) {
         	$this->validate($request, array(
     			'name'         => 'required|unique:permissions',
-    			'display_name' => 'required|unique:permissions',
+    			'display_name' => 'required',
     	    ));
             DB::beginTransaction();
             try {

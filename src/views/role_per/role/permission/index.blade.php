@@ -4,11 +4,11 @@
 	<div id="content-container">
 		<div id="page-head">
             <div id="page-title">
-                <h1 class="page-header text-overflow">Roles - Permission</h1>
+                <h1 class="page-header text-overflow">{{ trans('backend.role_premission.lable') }}</h1>
             </div>
             <ol class="breadcrumb">
 				<li><a href="#"><i class="demo-pli-home"></i></a></li>
-				<li><a href="#">Pick Permission</a></li>
+				<li><a href="#">{{ trans('backend.actions.picker') }}</a></li>
             </ol>
         </div>
 		<div id="page-content">
@@ -52,7 +52,7 @@
 				            @endforeach
 				            <div class="row">
 				            	<div class="col-sm-12">
-				                	<button type="submit" class="btn btn-primary btn-block">Gửi</button>
+				                	<button type="submit" class="btn btn-primary btn-block">{{ trans('backend.actions.submit') }}</button>
 				                </div>
 				            </div>
 		            	</form>
