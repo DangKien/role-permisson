@@ -92,7 +92,7 @@ class RoleController extends Controller
             ));
             DB::beginTransaction();
             try {
-                $role = $this->roleModel->findOrFail($id);
+                $role               = $this->roleModel->findOrFail($id);
                 $role->name         = $request->name;
                 $role->display_name = $request->display_name;
                 $role->description  = $request->description;
@@ -115,7 +115,7 @@ class RoleController extends Controller
         {
             DB::beginTransaction();
             try {
-                if ($role = $this->roleModel::whereId($id) && $role->name != 'supperadmin') {
+                if ($role = $this->roleModel::whereId($id) && @$role->name != 'supperadmin') {
                     $role->delete();
                 }
                 DB::commit();
