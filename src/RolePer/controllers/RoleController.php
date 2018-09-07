@@ -115,7 +115,7 @@ class RoleController extends Controller
         {
             DB::beginTransaction();
             try {
-                $role = $this->roleModel::where('id',$id)->first();
+                $role = $this->roleModel::where('id', $id)->first();
                 if (!empty($role) && @$role->name != config('roleper.superadmin')) {
                     $role->delete();
                 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\User;
-use DB;
+use DB, Auth;
 
 class UserRoleController extends Controller
 {
@@ -24,6 +24,9 @@ class UserRoleController extends Controller
     public function index($id)
     {	
     	$user = $this->userModel->with("roles")->findOrFail($id);
+        if (!Auth::user()->hasRole(config('roleper.superadmin')) && $user->hasRole(config('roleper.superadmin')) ) {
+            return redirect()->back();
+        }
     	return view("user_permission.user_role.index", array('user'=>$user));
     }
     /**
@@ -46,7 +49,6 @@ class UserRoleController extends Controller
         DB::beginTransaction();
         try {
             $user = User::find($id);
-            return $user;
             if (isset($request->roles)) {
                 $user->roles()->sync($request->roles);
             }
