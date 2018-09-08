@@ -2,6 +2,7 @@
 namespace DangKien\Database\Seeds;
 
 use Illuminate\Database\Seeder;
+use DB;
 use Hash;
 
 class RolePermissionSeed extends Seeder
