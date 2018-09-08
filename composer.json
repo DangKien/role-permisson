@@ -29,6 +29,7 @@
         },
         "classmap": [
             "src/RolePer/Models",
+            "src/RolePer/Libs",
             "src/RolePer/controllers",
             "src/RolePer/Traits"
         ]
