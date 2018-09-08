@@ -8,14 +8,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
 use DB;
+use DangKien\RolePer\Libs\ExitRule;
 
 class RoleController extends Controller
 {
 	private $roleModel;
 
-    public function __construct(Role $roleModel)
+    public function __construct(Role $roleModel, ExitRule $exitRule)
     {
     	$this->roleModel      = $roleModel;
+        $this->exitRule       = $exitRule;
     }
 
     public function index() {
@@ -90,7 +92,26 @@ class RoleController extends Controller
             ));
             DB::beginTransaction();
             try {
-                $role               = $this->roleModel->findOrFail($id);
+                $role         = $this->roleModel->findOrFail($id);
+                // $exit_name    = $this->roleModel->where(array(
+                //                                     array('name', $request->name), 
+                //                                     array('id', '!=', $id),
+                //                                 ))->first();
+
+                // $exit_display = $this->roleModel->where(array(
+                //                                     array('display_name', '=', $request->display_name), 
+                //                                     array('id', '!=', $id)
+                //                                 ))->first();
+                // if (!$this->exitRule->passes('role', 'name', $request->name, $id)) {
+                //     return redirect()->back()
+                //                     ->withInput()
+                //                     ->withErrors(['error_role' => trans('validation.unique', ['attribute' => 'Name'])]);
+                // }
+                if (!empty($exit_display) ) {
+                    return redirect()->back()
+                                    ->withInput()
+                                    ->withErrors(['error_role' => trans('validation.unique', ['attribute' => 'Display name'])]);
+                }
                 $role->name         = $request->name;
                 $role->display_name = $request->display_name;
                 $role->description  = $request->description;
