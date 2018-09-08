@@ -87,9 +87,10 @@ class RoleController extends Controller
         public function update(Request $request, $id)
         {
             $this->validate($request, array(
-                'name'         => 'required',
-                'display_name' => 'required',
+                'name'         => 'required|unique_rule:roles,$id',
+                'display_name' => 'required'
             ));
+            return 123;
             DB::beginTransaction();
             try {
                 $role         = $this->roleModel->findOrFail($id);
@@ -102,12 +103,12 @@ class RoleController extends Controller
                 //                                     array('display_name', '=', $request->display_name), 
                 //                                     array('id', '!=', $id)
                 //                                 ))->first();
-                // if (!$this->exitRule->passes('role', 'name', $request->name, $id)) {
-                //     return redirect()->back()
-                //                     ->withInput()
-                //                     ->withErrors(['error_role' => trans('validation.unique', ['attribute' => 'Name'])]);
-                // }
-                if (!empty($exit_display) ) {
+                if (!$this->exitRule->passes('roles', 'name', $request->name, $id) ) {
+                    return redirect()->back()
+                                    ->withInput()
+                                    ->withErrors(['error_role' => trans('validation.unique', ['attribute' => 'Name'])]);
+                }
+                if (!$this->exitRule->passes('roles', 'name', $request->name, $id) ) {
                     return redirect()->back()
                                     ->withInput()
                                     ->withErrors(['error_role' => trans('validation.unique', ['attribute' => 'Display name'])]);

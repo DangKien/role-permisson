@@ -1,4 +1,4 @@
-{
+x{
     "name": "dangkien/roleper",
     "description": "This package provides a flexible way to add Role-based Permissions to Laravel",
     "keywords": ["laravel","illuminate","auth","roles","acl","permission"],
@@ -29,7 +29,6 @@
         },
         "classmap": [
             "src/RolePer/Models",
-            "src/RolePer/Libs",
             "src/RolePer/controllers",
             "src/RolePer/Traits"
         ]
