@@ -28,10 +28,10 @@
             "DangKien\\RolePer\\": "src/RolePer/"
         },
         "classmap": [
-            "src/RolePer/Models",
-            "src/RolePer/Libs",
-            "src/RolePer/controllers",
-            "src/RolePer/Traits"
+            // "src/RolePer/Models",
+            // "src/RolePer/Libs",
+            // "src/RolePer/controllers",
+            // "src/RolePer/Traits"
         ]
     },
     "extra":{
