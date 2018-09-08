@@ -39,10 +39,10 @@ class RolePermissionSeed extends Seeder
         ]);
 
         DB::table('permissions')->insert([
-            ['name' => 'user.read', 'display_name' => 'Read'],
-            ['name' => 'user.create', 'display_name' => 'Create'],
-            ['name' => 'user.update', 'display_name' => 'Update'],
-            ['name' => 'user.delete', 'display_name' => 'Delete'],
+            ['name' => 'user.read', 'display_name' => 'Read', 'permission_group_id' => 1],
+            ['name' => 'user.create', 'display_name' => 'Create', 'permission_group_id' => 1],
+            ['name' => 'user.update', 'display_name' => 'Update', 'permission_group_id' => 1],
+            ['name' => 'user.delete', 'display_name' => 'Delete', 'permission_group_id' => 1],
         ]);
 
         DB::table('permission_role')->insert([
