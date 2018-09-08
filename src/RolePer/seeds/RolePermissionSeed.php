@@ -16,8 +16,8 @@ class RolePermissionSeed extends Seeder
     {
         DB::table('users')->insert([
             'name'     => 'Dev Transoft',
-            'email'    => 'dev.transoft@gmail.com',
-            'password' =>  Hash::make('123456'),
+            'email'    => 'dev@transoftvietnam.com',
+            'password' =>  Hash::make('12345678'),
             'phone'    => '0123456789',
             'avatar'   => '1.png'
         ]);
