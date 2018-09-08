@@ -1,4 +1,5 @@
 <?php
+namespace DangKien\Database\Seeds;
 
 use Illuminate\Database\Seeder;
 use Hash;
