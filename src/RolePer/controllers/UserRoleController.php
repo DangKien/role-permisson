@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use App\Models\Role;
 use DB, Auth;
 
 class UserRoleController extends Controller
@@ -49,17 +50,20 @@ class UserRoleController extends Controller
         DB::beginTransaction();
         try {
             $user = User::find($id);
-            if (isset($request->roles)) {
-                $user->roles()->sync($request->roles);
+            $role_spad = Role::where('name', config('roleper.superadmin'))->first();
+            $roles = isset($request->roles) ? $request->roles : array();
+            if ($user->hasRole(config('roleper.superadmin'))) {
+                if (!in_array($role_spad->id, $roles)) {
+                    return redirect()->back()->withInput()->withErrors(['roles' => trans('backend.validate.error_user_role')]);
+                }
             }
-            else {
-                $user->roles()->sync([]);
-            }
+            $user->roles()->sync($roles);
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
         }
 		
-		return redirect()->route('users.index');
+		return redirect()->route('users.index')->with('users', 'success');
     }
 }

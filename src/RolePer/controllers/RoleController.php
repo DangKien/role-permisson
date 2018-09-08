@@ -49,12 +49,10 @@ class RoleController extends Controller
             $this->roleModel->description  = $request->description;
             $this->roleModel->save();
             DB::commit();
+            return redirect()->route('roles.index')->with(['role' => trans('backend.role.actions_create_success')]);
         } catch (Exception $e) {
             DB::rollback();
         }
-        
-		
-		return redirect()->route('roles.index');
     }
         /**
          * Display the specified resource.
@@ -98,12 +96,11 @@ class RoleController extends Controller
                 $role->description  = $request->description;
                 $role->save();
                 DB::commit();
+                return redirect()->route('roles.index')->with(['role' => trans('backend.role.actions_update_success')]);
             } catch (Exception $e) {
                 DB::rollback();
             }
-           
     		
-    		return redirect()->route('roles.index');
         }
         /**
          * Remove the specified resource from storage.
@@ -120,10 +117,10 @@ class RoleController extends Controller
                     $role->delete();
                 }
                 DB::commit();
+                return redirect()->route('roles.index')->with(['role' => trans('backend.role.actions_delete_success')]);
             } catch (Exception $e) {
                 DB::rollback();
             }
         	
-    		return redirect()->route('roles.index');
         }
 }

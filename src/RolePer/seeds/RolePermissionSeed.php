@@ -2,7 +2,6 @@
 namespace DangKien\Database\Seeds;
 
 use Illuminate\Database\Seeder;
-use DB;
 use Hash;
 
 class RolePermissionSeed extends Seeder
@@ -14,20 +13,26 @@ class RolePermissionSeed extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name'     => 'Dev Transoft',
-            'email'    => 'dev@transoftvietnam.com',
-            'password' =>  Hash::make('12345678'),
-            'phone'    => '0123456789',
-            'avatar'   => '1.png'
+    	DB::table('users')->insert([
+			'name'     => 'Dev Transoft',
+			'email'    => 'dev.transoft@gmail.com',
+			'password' =>  Hash::make('123456'),
+			'phone'    => '0123456789',
+			'avatar'   => '1.png'
         ]);
 
         DB::table('roles')->insert([
             'name' => config('roleper.superadmin'),
             'display_name' => 'Super Admin',
-            'description' => 'Super admin'
+            'desciprion' => 'Super admin'
         ]);
-        
+
+        DB::table('roles')->insert([
+            'name' => config('roleper.superadmin'),
+            'display_name' => 'Super Admin',
+            'desciprion' => 'Super admin'
+        ]);
+
         DB::table('role_user')->insert([
             'user_id' => '1',
             'role_id' => '1',
@@ -39,10 +44,10 @@ class RolePermissionSeed extends Seeder
         ]);
 
         DB::table('permissions')->insert([
-            ['name' => 'user.read', 'display_name' => 'Read', 'permission_group_id' => 1],
-            ['name' => 'user.create', 'display_name' => 'Create', 'permission_group_id' => 1],
-            ['name' => 'user.update', 'display_name' => 'Update', 'permission_group_id' => 1],
-            ['name' => 'user.delete', 'display_name' => 'Delete', 'permission_group_id' => 1],
+            ['name' => 'user.read', 'display_name' => 'Read'],
+            ['name' => 'user.create', 'display_name' => 'Create'],
+            ['name' => 'user.update', 'display_name' => 'Update'],
+            ['name' => 'user.delete', 'display_name' => 'Delete'],
         ]);
 
         DB::table('permission_role')->insert([

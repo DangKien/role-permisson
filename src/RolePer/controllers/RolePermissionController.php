@@ -25,7 +25,7 @@ class RolePermissionController extends Controller
     {
     	$role = $this->roleModel::with('permission_role')->findOrFail($role_id);
 
-        if ($role->name == config('roleper.superadmin') && !Auth::user()->hasRole(['superadmin'])) {
+        if ($role->name == config('roleper.superadmin') && Auth::check() && !Auth::user()->hasRole(config('roleper.superadmin'))) {
             return redirect()->back();
         }
 
@@ -64,7 +64,7 @@ class RolePermissionController extends Controller
             DB::rollback();
         }
     	
-		return redirect()->route('roles.index');
+		return redirect()->route('roles.index')->with(['role' => trans('backend.role.actions_create_success')]);
     }
 
 }

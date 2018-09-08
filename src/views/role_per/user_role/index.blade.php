@@ -38,10 +38,12 @@
 											value="{{ $role->id }}">
     										{{ $role->display_name }}
     									</option>
-    									
     		            	        @endforeach
     			            	</select>
     			            	<br>
+    			            	@if ($errors->has('roles'))
+	                            	<p class="text-left text-danger">{{ $errors->first('roles') }}</p>
+	                            @endif
     			            	<br>
     			            	<div class="row">
     			            		<div class="col-sm-12">

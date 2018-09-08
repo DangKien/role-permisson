@@ -78,6 +78,17 @@
 @endsection
 
 @section ('myJs')
+	@if (Session::has('role'))
+	<script>
+		$.toast({
+		    heading: '{{ trans("backend.user_role.lable") }}',
+		    text: '{{ Session::get("user_role") }}',
+		    showHideTransition: 'fade',
+		    position: 'top-right',
+		    icon: 'success'
+		})
+	</script>
+	@endif
 @endsection
 
 @section ('myCss')
