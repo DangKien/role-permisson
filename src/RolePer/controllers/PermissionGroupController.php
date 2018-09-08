@@ -95,6 +95,10 @@ class PermissionGroupController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, array(
+            'name'         => "required|unique_rule:permission_group,$id",
+            'display_name' => "required|unique_rule:permission_group,$id"
+        ));
         DB::beginTransaction();
         try {
             $permissionGr               = $this->permissionGroupModel->findOrFail($id);

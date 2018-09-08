@@ -5,16 +5,20 @@ namespace DangKien\RolePer\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Models\PermissionGroup;
 use App\Models\Permission;
 use DB;
 
-class PermissionController extends Controller
-{	
-	private $permissionModel;
-	public function __construct(Permission $permissionModel)
-	{
-		$this->permissionModel = $permissionModel;
-	}
+class PermissionGroupController extends Controller
+{
+    private $permissionGroupModel;
+    private $permissionModel;
+
+    public function __construct(PermissionGroup $permissionGroupModel, Permission $permissionModel)
+    {
+        $this->permissionGroupModel = $permissionGroupModel;
+        $this->permissionModel      = $permissionModel;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +26,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view("user_permission.permission.index");
+        return view("user_permission.permission_group.index");
     }
 
     /**
@@ -32,7 +36,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view("user_permission.permission.add");
+        return view("user_permission.permission_group.add");
     }
 
     /**
@@ -41,23 +45,22 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        	$this->validate($request, array(
-    			'name'         => 'required|unique:permissions',
-    			'display_name' => 'required',
-    	    ));
-            DB::beginTransaction();
-            try {
-                $this->permissionModel->name                = $request->name;
-                $this->permissionModel->display_name        = $request->display_name;
-                $this->permissionModel->description         = $request->description;
-                $this->permissionModel->permission_group_id = $request->per_gr;
-                $this->permissionModel->save();
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollback();
-            }
-    		return redirect()->route('permissions.index');
+    public function store(Request $request)
+    {
+        $this->validate($request, array(
+            'name'         => 'required|unique:permission_group',
+            'display_name' => 'required|unique:permission_group',
+        ));
+        DB::beginTransaction();
+        try {
+            $this->permissionGroupModel->name         = $request->name;
+            $this->permissionGroupModel->display_name = $request->display_name;
+            $this->permissionGroupModel->save();
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+        return redirect()->route('permissions-group.index');
     }
 
     /**
@@ -79,10 +82,9 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-    	$permission = $this->permissionModel::with('permission_group')
-                                            ->findOrFail($id);   
-        return view("user_permission.permission.add", array("permission" => $permission));
-	}
+        $per_gr = $this->permissionGroupModel::findOrFail($id);
+        return view("user_permission.permission_group.add", array("per_gr" => $per_gr));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -93,19 +95,22 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, array(
+            'name'         => "required|unique_rule:permission_group,$id",
+            'display_name' => "required|unique_rule:permission_group,$id"
+        ));
         DB::beginTransaction();
         try {
-            $permission = $this->permissionModel->findOrFail($id);
-            $permission->name                = $request->name;
-            $permission->display_name        = $request->display_name;
-            $permission->description         = $request->description;
-            $permission->permission_group_id = $request->per_gr;
-            $permission->save();
+            $permissionGr               = $this->permissionGroupModel->findOrFail($id);
+            $permissionGr->name         = $request->name;
+            $permissionGr->display_name = $request->display_name;
+            $permissionGr->save();
+            
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
         }
-		return redirect()->route('permissions.index');
+        return redirect()->route('permissions-group.index');
     }
 
     /**
@@ -118,15 +123,15 @@ class PermissionController extends Controller
     {
         DB::beginTransaction();
         try {
-            if ($permission = $this->permissionModel::whereId($id)) {
-                $permission->delete();
+            if ( $permissionGr = $this->permissionGroupModel::whereId($id) ) {
+                $this->permissionModel->where('permission_group_id', $permissionGr->id)->delete();
+                $permissionGr->delete();
             }
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
         }
         
-    	
-		return redirect()->route('permissions.index');
+        return redirect()->route('roles.index');
     }
 }

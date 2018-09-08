@@ -89,7 +89,7 @@ class RoleController extends Controller
         {
             $this->validate($request, array(
                 'name'         => "required|unique_rule:roles,$id",
-                'display_name' => 'required'
+                'display_name' => "required|unique_rule:roles,$id"
             ));
             DB::beginTransaction();
             try {
