@@ -14,24 +14,24 @@ class RolePermissionSeed extends Seeder
      */
     public function run()
     {
-    	DB::table('users')->insert([
-			'name'     => 'Dev Transoft',
-			'email'    => 'dev.transoft@gmail.com',
-			'password' =>  Hash::make('123456'),
-			'phone'    => '0123456789',
-			'avatar'   => '1.png'
+        DB::table('users')->insert([
+            'name'     => 'Dev Transoft',
+            'email'    => 'dev.transoft@gmail.com',
+            'password' =>  Hash::make('123456'),
+            'phone'    => '0123456789',
+            'avatar'   => '1.png'
         ]);
 
         DB::table('roles')->insert([
             'name' => config('roleper.superadmin'),
             'display_name' => 'Super Admin',
-            'desciprion' => 'Super admin'
+            'description' => 'Super admin'
         ]);
 
         DB::table('roles')->insert([
             'name' => config('roleper.superadmin'),
             'display_name' => 'Super Admin',
-            'desciprion' => 'Super admin'
+            'description' => 'Super admin'
         ]);
 
         DB::table('role_user')->insert([
