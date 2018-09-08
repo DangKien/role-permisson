@@ -27,13 +27,7 @@ class RolePermissionSeed extends Seeder
             'display_name' => 'Super Admin',
             'description' => 'Super admin'
         ]);
-
-        DB::table('roles')->insert([
-            'name' => config('roleper.superadmin'),
-            'display_name' => 'Super Admin',
-            'description' => 'Super admin'
-        ]);
-
+        
         DB::table('role_user')->insert([
             'user_id' => '1',
             'role_id' => '1',
