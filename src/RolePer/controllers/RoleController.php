@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use App\Models\Role;
 use DB;
-use DangKien\RolePer\Libs\ExitRule;
+use App\Libs\ExitRule;
 
 class RoleController extends Controller
 {

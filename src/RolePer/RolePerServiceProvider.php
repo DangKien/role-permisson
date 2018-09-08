@@ -37,6 +37,7 @@ class RolePerServiceProvider extends ServiceProvider
             __DIR__.'/Models/DkRole.php'            => base_path('app/Models/Role.php'),
             __DIR__.'/Middleware'                   => base_path('app/Http/Middleware'),
             __DIR__.'/../views/role_per'            => base_path('resources/views/user_permission'),
+            __DIR__.'/Libs'                         => base_path('app/Libs'),
 
         ]);
         $this->bladeDirectives();

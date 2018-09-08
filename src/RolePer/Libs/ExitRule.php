@@ -1,5 +1,5 @@
 <?php
-namespace DangKien\RolePer\Libs;
+namespace App\Libs;
 
 use DB;
 
