@@ -28,16 +28,29 @@
 			            		@method ('POST')
     			            	<p class="text-main text-bold mar-no">{{ trans('backend.user_role.premission') }}</p>
     			            	<select multiple="multiple" class="form-control selected-2" name="roles[]">
-    		            	        @foreach ($roles as $key => $role) 	
-    									<option @foreach ($user->roles as $user_role) 
-	    										@if($role->id == $user_role->id)
-	    											{{ 'selected' }} 
-	    											@break 
-	    										@endif 
-											@endforeach
-											value="{{ $role->id }}">
-    										{{ $role->display_name }}
-    									</option>
+    		            	        @foreach ($roles as $key => $role)
+    		            	        	@if ($role->name != config('roleper.superadmin'))
+	    									<option @foreach ($user->roles as $user_role) 
+		    										@if($role->id == $user_role->id)
+		    											{{ 'selected' }} 
+		    											@break 
+		    										@endif 
+												@endforeach
+												value="{{ $role->id }}">
+	    										{{ $role->display_name }}
+	    									</option>
+	    								@elseif (Auth::check() && Auth::user()->hasRole('roleper.superadmin')) 
+    		            	        		&& $role->name == config('roleper.superadmin'))
+	    									<option @foreach ($user->roles as $user_role) 
+		    										@if($role->id == $user_role->id)
+		    											{{ 'selected' }} 
+		    											@break 
+		    										@endif 
+												@endforeach
+												value="{{ $role->id }}">
+	    										{{ $role->display_name }}
+	    									</option>
+    		            	        	@endif 	
     		            	        @endforeach
     			            	</select>
     			            	<br>

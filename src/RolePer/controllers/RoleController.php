@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Permission;
 use App\Models\Role;
-use DB;
+use DB, Auth;
 
 class RoleController extends Controller
 {
@@ -73,6 +73,9 @@ class RoleController extends Controller
         public function edit($id)
         {   
             $role = Role::findOrFail($id);
+            if ($role->name == config('roleper.superadmin') && Auth::check() && !Auth::user()->hasRole(config('roleper.superadmin')) ) {
+                return abort(403);
+            }
             return view("user_permission.role.add", array("role" => $role));
         }
         /**
@@ -91,6 +94,9 @@ class RoleController extends Controller
             DB::beginTransaction();
             try {
                 $role               = $this->roleModel->findOrFail($id);
+                if ($role->name == config('roleper.superadmin') && Auth::check() && !Auth::user()->hasRole(config('roleper.superadmin')) ) {
+                    return abort(403);
+                }
                 $role->name         = $request->name;
                 $role->display_name = $request->display_name;
                 $role->description  = $request->description;

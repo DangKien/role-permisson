@@ -57,8 +57,11 @@
 			                                	<a class="btn btn-sm btn-info btn-icon" title="update"  href="{{ route('roles.edit', $role->id) }}">
 			                                		<i class="fa fa-edit icon-lg"></i>
 			                                	</a>
+			                                	@if ( Auth::check() && ($role->name != config('roleper.superadmin')) || 
+			                                	(Auth::user()->hasRole(config('roleper.superadmin')) && $role->name == config('roleper.superadmin'))  )
 			                                	<a class="btn btn-sm btn-warning" title="permission" 
 			                                	href="{{ route('roles-permission.index', $role->id) }}"><i class="fa fa-key"></i></a>
+			                                	@endif
 			                                    @csrf
 			                                    @method('DELETE')
 			                                    <button type="submit" title="delete"  class="btn btn-sm btn-danger"><i class="fa fa-trash icon-lg"></i></button>
