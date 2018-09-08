@@ -31,6 +31,7 @@ class RolePerServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/config.php'         => base_path('config/roleper.php'),
             __DIR__.'/migrations'                   => base_path('database/migrations'),
+            __DIR__.'/seeds'                        => base_path('database/seeds'),
             __DIR__.'/Models/DkPermission.php'      => base_path('app/Models/Permission.php'),
             __DIR__.'/Models/DkPermissionGroup.php' => base_path('app/Models/PermissionGroup.php'),
             __DIR__.'/Models/DkRole.php'            => base_path('app/Models/Role.php'),
