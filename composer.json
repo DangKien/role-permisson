@@ -28,7 +28,7 @@
             "DangKien\\RolePer\\": "src/RolePer/"
         },
         "classmap": [
-            "src/RolePer/controllers",
+            "src/RolePer/controllers"
         ]
     },
     "extra":{
