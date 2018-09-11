@@ -14,7 +14,9 @@ class RolePermissionController extends Controller
     public function __construct(Role $roleModel)
     {
         $this->roleModel = $roleModel;
-        // $this->middleware('auth');
+
+        $this->middleware('permission:permission.add_permission', ['only' => ['index']]);
+        $this->middleware('permission:permission.add_permission', ['only' => ['store']]);
 	}
     /**
      * Display a listing of the resource.

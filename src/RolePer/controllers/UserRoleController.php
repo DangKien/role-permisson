@@ -15,7 +15,8 @@ class UserRoleController extends Controller
     public function __construct(User $userModel)
     {
     	$this->userModel = $userModel;
-        // $this->middleware('auth');
+        $this->middleware('permission:permission.add_role',['only' => ['create']]);
+        $this->middleware('permission:permission.add_role', ['only' => ['store']]);
 	}
     /**
      * Display a listing of the resource.
@@ -25,6 +26,9 @@ class UserRoleController extends Controller
     public function index($id)
     {	
     	$user = $this->userModel->with("roles")->findOrFail($id);
+        if (Auth::user()->hasPermission('')) {
+
+        }
         if (!Auth::user()->hasRole(config('roleper.superadmin')) && $user->hasRole(config('roleper.superadmin')) ) {
             return redirect()->back();
         }
