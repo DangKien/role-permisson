@@ -24,35 +24,44 @@
 		            	<form action="{{ route('roles-permission.store', @$role->id) }}" method="POST" accept-charset="utf-8">
 		            		@csrf
 		            		@foreach (@$per_gr as $key => $gr) 
-				            	<div class="row" style="margin-bottom: 50px;">
-				            		<div class="col-sm-12 panel-title">
-				            			<p class="text-main text-bold mar-no"> {{ @$gr->display_name }} </p>
-				            		</div>
-				            		<div class="col-sm-12">
-				            			@foreach (@$gr->permissions as $key => $permission)
-					            			<div class="col-sm-3 text-center">
-					            				<div class="checkbox">
-					            					<input id="{{ @$permission->name }}" class="magic-checkbox"
-							                            type="checkbox" name="permission[]" 
-							                            value="{{ @$permission->id }}"
-														@foreach (@$role->permission_role as $role_per)
-															@if ($role_per->id == @$permission->id)
-																{{ 'checked' }}
-															@endif
-														@endforeach
-							                            >
-							                        
-						                            <label for="{{ $permission->name }}">{{ $permission->display_name }}</label>
-						                        </div>
-					            			</div>
-				            			@endforeach
-				            		</div>
-				            	</div>
-				            	<hr/>
+		            			<div>
+		            				<div class="panel-group accordion" id="demo-acc-info-outline">
+							            <div class="panel panel-bordered panel-info">
+							                <!--Accordion title-->
+							                <div class="panel-heading">
+							                    <h4 class="panel-title">
+							                        <a data-toggle="collapse" href="#demo-acd-info-outline-{{$key}}" aria-expanded="true" class="">{{ @$gr->display_name }}</a>
+							                    </h4>
+							                </div>
+							
+							                <!--Accordion content-->
+							                <div class="panel-collapse collapse in" id="demo-acd-info-outline-{{$key}}" aria-expanded="true" style="">
+							                    <div class="panel-body">
+						                        	@foreach (@$gr->permissions as $key => $permission)
+	    					            			<div class="col-sm-3 text-left">
+	    					            				<div class="checkbox">
+	    					            					<input id="{{ @$permission->name }}" class="magic-checkbox"
+	    							                            type="checkbox" name="permission[]" 
+	    							                            value="{{ @$permission->id }}"
+	    														@foreach (@$role->permission_role as $role_per)
+	    															@if ($role_per->id == @$permission->id)
+	    																{{ 'checked' }}
+	    															@endif
+	    														@endforeach
+	    							                            >
+	    						                            <label for="{{ $permission->name }}">{{ $permission->display_name }}</label>
+	    						                        </div>
+	    					            			</div>
+	    				            				@endforeach
+							                    </div>
+							                </div>
+							            </div>
+							        </div>
+		            			</div>
 				            @endforeach
 				            <div class="row">
 				            	<div class="col-sm-12">
-				                	<button type="submit" class="btn btn-primary btn-block">{{ trans('backend.actions.submit') }}</button>
+				                	<button type="submit" class="btn btn-primary btn-block btn-form-submit"><i class="ti-save"></i></button>
 				                </div>
 				            </div>
 		            	</form>
@@ -69,4 +78,3 @@
 @section ('myCss')
 	
 @endsection
-
