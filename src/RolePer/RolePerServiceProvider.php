@@ -30,14 +30,14 @@ class RolePerServiceProvider extends ServiceProvider
     {
         // Publish config files
         $this->publishes([
-            __DIR__.'/../config/config.php'         => base_path('config/roleper.php'),
-            __DIR__.'/migrations'                   => base_path('database/migrations'),
-            __DIR__.'/seeds'                        => base_path('database/seeds'),
-            __DIR__.'/Models/DkPermission.php'      => base_path('app/Models/Permission.php'),
-            __DIR__.'/Models/DkPermissionGroup.php' => base_path('app/Models/PermissionGroup.php'),
-            __DIR__.'/Models/DkRole.php'            => base_path('app/Models/Role.php'),
-            __DIR__.'/Middleware'                   => base_path('app/Http/Middleware'),
-            __DIR__.'/../views/role_per'            => base_path('resources/views/user_permission'),
+            __DIR__.'/../config/config.php'       => base_path('config/roleper.php'),
+            __DIR__.'/migrations'                 => base_path('database/migrations'),
+            __DIR__.'/seeds'                      => base_path('database/seeds'),
+            __DIR__.'/Models/Permission.php'      => base_path('app/Models/Permission.php'),
+            __DIR__.'/Models/PermissionGroup.php' => base_path('app/Models/PermissionGroup.php'),
+            __DIR__.'/Models/Role.php'            => base_path('app/Models/Role.php'),
+            __DIR__.'/Middleware'                 => base_path('app/Http/Middleware'),
+            __DIR__.'/../views/role_per'          => base_path('resources/views/user_permission'),
         ]);
         $this->bladeDirectives();
         Validator::extend('unique_rule', function($attribute, $value, $parameters, $validator) {
