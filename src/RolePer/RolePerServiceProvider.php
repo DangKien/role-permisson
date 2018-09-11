@@ -60,11 +60,11 @@ class RolePerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('DangKien\RolePer\Controllers\RoleController');
-        $this->app->make('DangKien\RolePer\Controllers\PermissionGroupController');
-        $this->app->make('DangKien\RolePer\Controllers\PermissionController');
-        $this->app->make('DangKien\RolePer\Controllers\UserRoleController');
-        $this->app->make('DangKien\RolePer\Controllers\RolePermissionController');
+        // $this->app->make('DangKien\RolePer\Controllers\RoleController');
+        // $this->app->make('DangKien\RolePer\Controllers\PermissionGroupController');
+        // $this->app->make('DangKien\RolePer\Controllers\PermissionController');
+        // $this->app->make('DangKien\RolePer\Controllers\UserRoleController');
+        // $this->app->make('DangKien\RolePer\Controllers\RolePermissionController');
     }
 
     /**

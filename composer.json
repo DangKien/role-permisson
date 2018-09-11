@@ -26,9 +26,7 @@
         "psr-4": {
             "App\\": "app/",
             "DangKien\\RolePer\\": "src/RolePer/"
-        },
-        "classmap": [
-        ]
+        }
     },
     "extra":{
         "laravel":{
