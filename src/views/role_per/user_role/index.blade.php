@@ -39,7 +39,7 @@
 												value="{{ $role->id }}">
 	    										{{ $role->display_name }}
 	    									</option>
-	    								@elseif (Auth::check() && Auth::user()->hasRole('roleper.superadmin')) 
+	    								@elseif (Auth::check() && Auth::user()->hasRole(config('roleper.superadmin'))
     		            	        		&& $role->name == config('roleper.superadmin'))
 	    									<option @foreach ($user->roles as $user_role) 
 		    										@if($role->id == $user_role->id)
