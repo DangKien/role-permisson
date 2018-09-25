@@ -38,6 +38,11 @@ php artisan vendor:publish
 
 to `routeMiddleware` array in `app/Http/Kernel.php`.
 
+copy to User.php
+```php
+    use \DangKien\RolePer\Traits\RolePerUserTrait;
+```
+ 
 
 #### Checking for Roles & Permissions
 
