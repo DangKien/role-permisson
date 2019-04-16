@@ -34,7 +34,7 @@
                 "DangKien\\RolePer\\RolePerServiceProvider"
             ],
             "aliases":{
-                "DangKien": "RolePer\\RolePer\\RolePerFacade"
+                "DangKien": "DangKien\\RolePer\\RolePerFacade"
             }
         }
     },
