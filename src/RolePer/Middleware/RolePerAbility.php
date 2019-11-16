@@ -40,6 +40,9 @@ class RolePerAbility
 	 */
 	public function handle($request, Closure $next, $roles, $permissions, $validateAll = false)
 	{
+		if (@User::ROOT_ACOUNT && @$this->auth->user()->email && in_array($this->auth->user()->email, User::ROOT_ACOUNT)) {
+			return $next($request);
+		}
 		if (!is_array($roles)) {
 			$roles = explode(self::DELIMITER, $roles);
 		}
