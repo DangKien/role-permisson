@@ -13,6 +13,7 @@ use Illuminate\Cache\TaggableStore;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use InvalidArgumentException;
+use App\User;
 
 trait RolePerUserTrait
 {
@@ -108,6 +109,9 @@ trait RolePerUserTrait
      */
     public function hasRole($name, $requireAll = false)
     {
+        if (@User::ROOT_ACOUNT && @auth()->user()->email && in_array(@auth()->user()->email, User::ROOT_ACOUNT)) {
+			return $next($request);
+		}
         if (is_array($name)) {
             foreach ($name as $roleName) {
                 $hasRole = $this->hasRole($roleName);
@@ -140,6 +144,10 @@ trait RolePerUserTrait
      */
     public function can($permission, $requireAll = false)
     {
+        if (@User::ROOT_ACOUNT && @auth()->user()->email && in_array(@auth()->user()->email, User::ROOT_ACOUNT)) {
+			return $next($request);
+		}
+        
         if (is_array($permission)) {
             foreach ($permission as $permName) {
                 $hasPerm = $this->can($permName);
