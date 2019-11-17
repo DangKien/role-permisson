@@ -13,7 +13,6 @@ use Illuminate\Cache\TaggableStore;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use InvalidArgumentException;
-use App\User;
 
 trait RolePerUserTrait
 {
@@ -144,7 +143,7 @@ trait RolePerUserTrait
      */
     public function can($permission, $requireAll = false)
     {
-        if (defined ('User::ROOT_ACCOUNT') && @auth()->user()->email && in_array(@auth()->user()->email, User::ROOT_ACCOUNT)) {
+        if (defined ('\App\User::ROOT_ACCOUNT') && @auth()->user()->email && in_array(@auth()->user()->email, \App\User::ROOT_ACCOUNT)) {
             return true;
 		}
         
