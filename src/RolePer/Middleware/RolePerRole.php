@@ -38,9 +38,9 @@ class RolePerRole
 	 */
 	public function handle($request, Closure $next, $roles)
 	{
-		if (defined ('User::ROOT_ACCOUNT') && @$this->auth->user()->email && in_array($this->auth->user()->email, User::ROOT_ACCOUNT)) {
-			return $next($request);
-		}
+        if (defined ('\App\User::ROOT_ACCOUNT') && @$this->auth->user()->email && in_array($this->auth->user()->email, \App\User::ROOT_ACCOUNT)) {
+            return $next($request);
+        }
 		if (!is_array($roles)) {
 			$roles = explode(self::DELIMITER, $roles);
 		}
