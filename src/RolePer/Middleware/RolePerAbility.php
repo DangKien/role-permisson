@@ -40,7 +40,7 @@ class RolePerAbility
 	 */
 	public function handle($request, Closure $next, $roles, $permissions, $validateAll = false)
 	{
-		if (@User::ROOT_ACOUNT && @$this->auth->user()->email && in_array($this->auth->user()->email, User::ROOT_ACOUNT)) {
+		if (defined ('User::ROOT_ACCOUNT') && @$this->auth->user()->email && in_array($this->auth->user()->email, User::ROOT_ACCOUNT)) {
 			return $next($request);
 		}
 		if (!is_array($roles)) {
