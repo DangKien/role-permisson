@@ -79,10 +79,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        $this->validate($request, array(
-            'name'         => "required|unique_rule:permissions,$id",
-            'display_name' => "required"
-        ));
+       
         $permission = $this->permissionModel::with('permission_group')
                                             ->findOrFail($id);   
         return view("user_permission.permission.add", array("permission" => $permission));
@@ -97,6 +94,10 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+         $this->validate($request, array(
+            'name'         => "required|unique_rule:permissions,$id",
+            'display_name' => "required"
+        ));
         DB::beginTransaction();
         try {
             $permission = $this->permissionModel->findOrFail($id);
